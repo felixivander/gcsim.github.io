@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC Simulator</title>
+    <link rel="stylesheet" href="GCSim.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body onload="bodyonload()" id="mainbody">
+    <header>
+		<div>
+			<h1 style="font-size:1.8vw;text-shadow:2px 2px 4px white"><i>GC Simulator</i></h1>
+		    <p style="font-size:1vw">An educational simulation tool for exploring gas chromatography</p>
+		</div>
+		<div class="headerbutton" onclick="ZoomButton()" id="choice111" title="Zoom" style="font-size:3.2vw">
+		</br>
+			<i class="fa fa-search-plus"></i> </br>
+			
+		</div>
+		<div class="PrefMain"><div class="PrefPaneld" id="choice112" title="Change Stationary Phase"></br>
+			<span id="StatPhase" style="font-size:1.4vw;font-weight: bold;"></span></br>
+			<span id="Dimension" style="font-size:1.15vw"></span>
+			</div><div class="prefchoice" id="prefchoice">
+			<div onclick="SearcherStat('DB-1')" title="0.32mm &times 1 &#xB5m">DB-1</div>
+			<div onclick="SearcherStat('DB-1701')" title="0.32mm &times 0.25 &#xB5m">DB-1701</div>
+			<div onclick="SearcherStat('EC-Wax')" title="0.25mm &times 0.25 &#xB5m">EC-Wax</div>
+			<div onclick="SearcherStat('DB-5')" title="0.53mm &times 1.5 &#xB5m">DB-5</div>
+			<div onclick="SearcherStat('PTE-5')" title="0.25mm &times 0.25 &#xB5m">PTE-5</div>
+			<div onclick="SearcherStat('SolGel-1')" title="0.25mm &times 0.25 &#xB5m">SolGel-1</div>
+			<div onclick="SearcherStat('HP-5')" title="0.53mm &times 0.88 &#xB5m">HP-5</div>
+			<div onclick="SearcherStat('SolGel-Wax')" title="0.25mm &times 0.25 &#xB5m">SolGel-Wax</div>
+			<div onclick="SearcherStat('HP-INNOWax')" title="0.25mm &times 0.3 &#xB5m">HP-INNOWax</div>
+			<div onclick="SearcherStat('DB-17')" title="0.25mm &times 0.25 &#xB5m">DB-17</div>
+			<div onclick="SearcherStat('DB-23')" title="0.25mm &times 0.25 &#xB5m">DB-23</div>
+			</div></div>
+		
+			
+		
+		<div class="headerbutton" onclick="Real()" title="Change Mode">
+		
+		</br></br></br>
+		<span id="R" style="font-size:1.4vw">Peak View</span>	
+		
+			</div>
+		<div class="headerbutton" onclick="Tempgrad()" id="choice114" title="Temperature Gradient">
+		</br></br></br>
+		<span id="TG" style="font-size:1.8vw">Isothermal</span>
+				
+			</div>
+		<div class="PrefMain" id="choice115">	
+			<div class="PrefPanel"><i class="fa fa-gear"></i></div>
+				<div class="prefchoice" id="prefchoice">
+					<div onclick="randomtoken()">Simulate Noise</div>
+					<div onclick="ShowWidget()" id="ShowWidget">Widget Display</div>
+					<div onclick="Normalizer()">Normalize</div>	
+				</div>
+		</div>
+		<div class="PrefMain" id="choice116">	
+			<div class="PrefPanel"><i class="fa fa-bars"></i></div>
+				<div class="prefchoice" id="prefchoice">
+					<div>Return</div>
+					<div>Instructor Resources</div>
+					<div>About</div>	
+				</div>
+		</div>
+	</header>
+	
+	<div class="bubble" id="bubble1" ondragstart="offsetterdown()" ondragend="offsetterup(1)" draggable="true"><span id="content1"></span></div><div class="bubble" id="bubble2" ondragstart="offsetterdown()" ondragend="offsetterup(2)" draggable="true"><span id="content2"></div><div class="bubble" id="bubble3" ondragstart="offsetterdown()" ondragend="offsetterup(3)" draggable="true"><span id="content3"></div><div class="bubble" id="bubble4" ondragstart="offsetterdown()" ondragend="offsetterup(4)" draggable="true"><span id="content4"></div><div class="bubble" id="bubble5" ondragstart="offsetterdown()" ondragend="offsetterup(5)" draggable="true"><span id="content5"></div><div class="bubble" id="bubble6" ondragstart="offsetterdown()" ondragend="offsetterup(6)" draggable="true"><span id="content6"></div><div class="bubble" id="bubble7" ondragstart="offsetterdown()" ondragend="offsetterup(7)" draggable="true"><span id="content7"></div><div class="bubble" id="bubble8" ondragstart="offsetterdown()" ondragend="offsetterup(8)" draggable="true"><span id="content8"></div>
+	
+		
+		<div class="notCtlPanel" >
+			<div class="spbuttons" id="purple">
+			<div style="display:inline-block"><div style="padding-left:5px;font-size:1vw"><b>Sample Composition : </b></div></div>
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 1" id="Analyte1" oninput="AnalyteSearcher(1)" style="color:red;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice11"></div><div id="choice12"></div><div id="choice13"></div><div id="choice14"></div><div id="choice15"></div>
+					</div>
+				</div>
+				<input type="color" id="color1" value="#ff0000">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 2" id="Analyte2" oninput="AnalyteSearcher(2)" style="color:blue;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice21"></div><div id="choice22"></div><div id="choice23"></div><div id="choice24"></div><div id="choice25"></div>
+					</div>
+				</div>
+				<input type="color" id="color2" value="#0000FF">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 3" id="Analyte3" oninput="AnalyteSearcher(3)" style="color:#000000;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice31"></div><div id="choice32"></div><div id="choice33"></div><div id="choice34"></div><div id="choice35"></div>
+					</div>
+				</div>
+				<input type="color" id="color3" value="#000000">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 4" id="Analyte4" oninput="AnalyteSearcher(4)" style="color:#808000;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice41"></div><div id="choice42"></div><div id="choice43"></div><div id="choice44"></div><div id="choice45"></div>
+					</div>
+				</div>
+				<input type="color" id="color4" value="#808000">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 5" id="Analyte5" oninput="AnalyteSearcher(5)" style="color:silver;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice51"></div><div id="choice52"></div><div id="choice53"></div><div id="choice54"></div><div id="choice55"></div>
+					</div>
+				</div>
+				<input type="color" id="color5" value="#C0C0C0">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 6" id="Analyte6" oninput="AnalyteSearcher(6)" style="color:#13F726;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice61"></div><div id="choice62"></div><div id="choice63"></div><div id="choice64"></div><div id="choice65"></div>
+					</div>
+				</div>
+				<input type="color" id="color6" value="#13F726">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 7" id="Analyte7" oninput="AnalyteSearcher(7)" style="color:#F413F7;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice71"></div><div id="choice72"></div><div id="choice73"></div><div id="choice74"></div><div id="choice75"></div>
+					</div>
+				</div>
+				<input type="color" id="color7" value="#F413F7">
+			<div class="dropdownmain"><div><input type="text" placeholder="Enter Analyte 8" id="Analyte8" oninput="AnalyteSearcher(8)" style="color:#13F2F7;width:8vw;margin-top:0%;border:0px;height:100%" autocomplete="off"></div>
+					<div class="dropdownchoices">
+						<div id="choice81"></div><div id="choice82"></div><div id="choice83"></div><div id="choice84"></div><div id="choice85"></div>
+					</div>
+				</div>
+				<input type="color" id="color8" value="#13F2F7">
+		<div class="dropdownmain" style="margin-top:0%;width:10vw;margin-bottom:0%;height:100%"> 
+				<div class="dropdownbutton" style="margin-top:0%;margin-bottom:0%" id="dbut">
+					<b>Preset Mixture</b>
+				</div>
+					<div id="choices" class="dropdownchoices"> 
+						<div onclick="presetter('Decane','Dodecane','Tetradecane','Hexadecane','Octadecane')"><i>n</i>-alkane series</div>
+						<div onclick="presetter('Benzene','Chlorobenzene','Bromobenzene','Iodobenzene','')">Halo-benzenes</div>
+						<div onclick="presetter('Methylbenzene','Ethylbenzene','Propylbenzene','Butylbenzene','Hexylbenzene')">Alkylbenzenes</div>
+						<div onclick="presetter('Bromobenzene','Decane','Undecane','Dodecane','n-Tridecane')">Testmix 1</div>
+						<div onclick="presetter('Undecane','Dodecane','n-Tridecane','1-Undecanol','n-pentadecane')">Testmix 2</div>
+				</div>
+			</div>	
+		</div>
+	<div style="position:relative;z-index: 10; float: right; padding-right: 20px; padding-top:0px; font-size: x-large;"><div class="updown"><i class="fa fa-toggle-up" onmousedown="zoomus()" onmouseup="zoomreset()" onclick="document.getElementById('sliderval10').stepUp()"></i></div><div class="updown" style="top:25px"><i class="fa fa-toggle-down" onmousedown="zoomds()" onmouseup="zoomreset()" onclick="document.getElementById('sliderval10').stepDown()"></i></div></div>
+		<div class="zoom">
+			<div class="pixel">
+			   <div class="inpixel" id="ip" onmousemove="showCoords(event)" onmouseout="clearCoor()"><div class="panner" id="lens"></div></div>
+			</div>			
+			<canvas id="canvas"></canvas>
+		</div>
+		<input type="range" min="0" max ="6000" value="0" class="slider" id="axisslider" step="1">
+		<div class='cntlPanel' id="StatPanel" ondragstart="offsetterdown()" ondragend="offsetterall('StatPanel')" draggable="true" style="position:absolute;display:none;left:595px;top:0px;margin-top:0px">
+			<h3>Stationary phase:</h3>
+			<div class="fa" style="position:absolute;top:0px;left:95%;font-size: 20px;cursor:pointer;color:red" onclick="displayer('StatPanel')">&#xf00d</div>
+					
+			<p>
+				<label><input type="radio" id="stat3" name="phase" onclick="SearcherStat('DB-1')" checked></label> DB-1 
+				<label><input type="radio" id="stat1" name="phase" onclick="SearcherStat('DB-1701')"> DB-1701</label>
+				<label><input type="radio" id="stat2" name="phase" onclick="SearcherStat('EC-Wax')"> EC-Wax</label></br>
+				<label><input type="radio" id="stat4" name="phase" onclick="SearcherStat('DB-5')"> DB-5</label>
+				<label><input type="radio" id="stat5" name="phase" onclick="SearcherStat('PTE-5')"> PTE-5</label>
+				<label><input type="radio" id="stat6" name="phase" onclick="SearcherStat('SolGel-1')"> SolGel-1</label>
+				<label><input type="radio" id="stat7" name="phase" onclick="SearcherStat('HP-5')"> HP-5</label>
+				<label><input type="radio" id="stat8" name="phase" onclick="SearcherStat('SolGel-Wax')"> SolGel-Wax</label>
+				<label><input type="radio" id="stat9" name="phase" onclick="SearcherStat('HP-INNOWax')"> HP-INNOWax</label>
+				<label><input type="radio" id="stat10" name="phase" onclick="SearcherStat('DB-17')"> DB-17</label>
+				<label><input type="radio" id="stat11" name="phase" onclick="SearcherStat('DB-23')"> DB-23</label>
+			</p></div>
+
+		<div class='cntlPanel' id="RampPanel" ondragstart="offsetterdown()" ondragend="offsetterall('RampPanel')" draggable="true" style="position:absolute;display:none;left:900px;top:0px;margin-top:0px">
+			<h2><b><u>Ramp Settings:</u></b></h2> <button onclick="adder()" style="width:100%">Add segment</button>
+			<div class="multdeg"> Ramp Rate in &#8451;/min</div><div class="multdeg">Ramp Duration in min</div>
+			<div class="multi" id="ramp1"><input type="number" id="rr1" placeholder="Ramp Rate in &#8451;/min" min="1" max="25" value="5" class="Multiput" title = "Ramp Rate"><input type="number" id="rtime1" placeholder="Ramp duration in min" min="1" max="40" value="5" class="Multiput" title = "Ramp Duration"><div class="c1" onclick="holder(1)"><b>HOLD</b></div></div>
+			<div class="multi" id="ramp2"><input type="number" id="rr2" placeholder="Ramp Rate in &#8451;/min" min="1" max="25" value="15" class="Multiput" title = "Ramp Rate"><input type="number" id="rtime2" placeholder="Ramp duration in min" min="1" max="40" value="15" class="Multiput" title = "Ramp Duration"><div class="c1" onclick="holder(2)"><b>HOLD</b></div></div>
+			
+			</div>
+	</div>
+	<div class="ResPane">
+		
+		<div class="inResPane" id="pane1">
+			<div class="Desigin" id="tablehair"><div class="Indic" onmouseover="hlight()" onmouseout="rhlight()"><b>Start selecting analytes</b></div></div>
+			<div class="Desigin" id="tablehead">
+				<div class="indpanex"><b>Analyte</b></div>
+				<div class="indpanel"><i><b>k</b></i></div>
+				<div class="indpane"><b>t<sub>R</sub> (min)</b></div>
+				<div class="indpane"><span style="font-size: 1.2vw; line-height: normal; text-align:center;justify-content: center;"><b>Peak Width </br>(min)</b></span></div>
+			</div>
+		</div>
+	<div class="inResPane" id="pane2">
+		<h2><u>General Properties:</u></h2>
+		<div class="opCondsChoicesr">
+			<div class="opCondsChoicest">
+				<p><label>Internal Diameter : 
+					<input type="number" min="0.2" max ="1.0" step="0.01" value="0.25" id="sliderval5" readonly></label> mm</p></div>
+			<div class="opCondsChoicest">
+				<p><label>Film Thickness : 
+					<input type="number" min="0.05" max ="5.00" step="0.01" value="0.25" id="sliderval4" readonly></label> &micro;m</p></div>
+			<div class="opCondsChoicest">	
+					<p><label>Flow Rate : 
+					<input type="number" min="0.05" max ="5" step="0.01" value="1.0" id="sliderval2" readonly></label> mL/min</p></div>
+			<div class="opCondsChoicest"  style="display:none">	
+					<p><label>Offset: 
+					<input type="number" min="0.5" max ="4" step="0.1" value="1.0" id="sliderval10"></label></p></div>
+			<div class="opCondsChoicest">
+				<p><label>Mobile Phase Volume : 
+					<input type="number" value="0" id="vm" readonly></label> mL</p></div>
+			<div class="opCondsChoicest">
+				<p><label>Dead Time : 
+					<input type="number" value="0" id="tm" readonly></label> min</p></div>
+			<div class="opCondsChoicest">
+				<p><label>Viscosity : 
+					<input type="number" value="0" id="visc" readonly></label> &micro;P</p></div>
+			<div class="opCondsChoicest">
+				<p><label>Linear Velocity : 
+					<input type="number" value="0" id="lin" readonly></label> m/min</p></div>
+		</div>
+	</div>	
+	<div class="inResPane" style="width:34%">
+		
+			<!-- 
+				Controls to set the chromatogrpahic conditions.
+				Note that the called JavaScript functions will need to perform 
+				unit conversion on the input values prior to updating calculations
+			-->	
+			<h2><u>Operating conditions:</u></h2>
+			
+				<div class="opCondsChoicess">
+					<p><label><span id="Start" style="margin-right:4px"></span>Temperature (40 &ndash; 270) °C:</label>
+					<input type="number" min="40" max ="270" step="1" value="60" id="sliderval1" oninput="Cors(1)"></br>
+					<input type="range" min="40" max ="270" step="1" value="60" class="sliders" style="width:100%" id="slidervals1" oninput="Cor(1)"></p></div>
+				<div class="opCondsChoicess">
+				<p><label>Inlet Pressure (1.1 &ndash; 5.00) atm: </label>
+					<input type="number" min="1.1" max ="5.00" step="0.05" value="2" id="sliderval6" oninput="Cors(6)"></br>
+					<input type="range" min="1.1" max ="5.00" step="0.05" value="2" class="sliders" style="width:100%" id="slidervals6" oninput="Cor(6)"></p></p></div>
+				<div class="opCondsChoicess">
+				<p><label>Column Length (10 &ndash; 100) m: </label>
+					<input type="number" min="10" max ="100" step="1" value="30" id="sliderval3" oninput="Cors(3)"></br>
+					<input type="range" min="10" max ="100" step="1" value="30" class="sliders" style="width:100%" id="slidervals3" oninput="Cor(3)"></p></p></div>	
+				<div class="nodisplay" id="RR">
+				<p><label>Ramp Rate °C/min:</label>
+					<input type="number" min="1" max ="50" step="1" value="5" id="sliderval20">
+					<input type="range" min="1" max ="50" step="1" value="5" class="sliders" style="width:100%" id="slidervals20" oninput="Cor(20)"></p></div>
+					
+			<!-- Note: the following could also be rendered as a fieldset -->
+			<div>		
+			<h2 style="display:inline-block"><u>Carrier Gas:</u></h2>	
+			<div class="carbut" id="cg1" onclick="Carrier(2.67,4,1,0.3992945,186.61685,1)">He</div><div id="cg3" class="carbut" onclick="Carrier(6.12,2,4,0.1827282,83.98985,3)">H<sub>2</sub></div><div class="carbut" id="cg2" onclick="Carrier(18.5,14,2,0.3837787,167.35536,2)">N<sub>2</sub></div>
+		</div>
+	</div>
+	<canvas class="zoomed" id="zoomed" ondragstart="offsetterdown()" ondragend="offsetterall('zoomed')" draggable="true" style="left:1000px;top:330px"></canvas>
+		<script src=enginenojason.js></script>
+</body>
+</html>
